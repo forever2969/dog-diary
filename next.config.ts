@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  outputFileTracingIncludes: {
+    '/icon': ['./public/pong.jpeg'],
+    '/apple-icon': ['./public/pong.jpeg'],
+  },
 };
 
 export default nextConfig;
