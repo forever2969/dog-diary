@@ -59,7 +59,7 @@ export default function DiaryForm({ date, coupleId, initial }: Props) {
       meal_dinner: mealDinner ? parseInt(mealDinner) : null,
       meal_night: mealCount === 4 && mealNight ? parseInt(mealNight) : null,
       memo: memo || null,
-    })
+    }, { onConflict: 'couple_id,date' })
     if (error) {
       setToast({ message: '저장 실패 😢', type: 'error' })
     } else {
