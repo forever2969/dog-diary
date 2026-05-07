@@ -13,6 +13,7 @@ type Props = {
 export default function DiaryCalendar({ markedDates: initialDates, coupleId }: Props) {
   const router = useRouter()
   const [markedDates, setMarkedDates] = useState(initialDates)
+  const [navigating, setNavigating] = useState(false)
 
   useEffect(() => {
     const channel = supabase
@@ -41,6 +42,7 @@ export default function DiaryCalendar({ markedDates: initialDates, coupleId }: P
 
   function handleClickDay(value: Date) {
     const date = value.toLocaleDateString('sv-SE')
+    setNavigating(true)
     router.push(`/diary/${date}`)
   }
 
@@ -56,7 +58,12 @@ export default function DiaryCalendar({ markedDates: initialDates, coupleId }: P
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm">
+    <div className="relative bg-white rounded-2xl shadow-sm">
+      {navigating && (
+        <div className="absolute inset-0 bg-white/70 rounded-2xl flex items-center justify-center z-10">
+          <div className="w-6 h-6 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
+        </div>
+      )}
       <Calendar
         locale="ko-KR"
         onClickDay={handleClickDay}
