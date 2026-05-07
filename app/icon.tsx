@@ -22,7 +22,7 @@ export default function Icon() {
         }}
       >
         {/* @ts-expect-error img allowed in ImageResponse */}
-        <img src={base64} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        <img src={base64} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'rotate(-90deg)' }} />
       </div>
     ),
     { ...size }
