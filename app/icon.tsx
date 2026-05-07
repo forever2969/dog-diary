@@ -22,7 +22,7 @@ export default function Icon() {
           display: 'flex',
         }}
       >
-        <img src={base64} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'rotate(-90deg)' }} />
+        <img src={base64} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       </div>
     ),
     { ...size }
