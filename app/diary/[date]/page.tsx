@@ -37,7 +37,9 @@ export default async function DiaryPage({ params }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-3">
-        <Link href="/" className="text-amber-500 text-xl leading-none">‹</Link>
+        <Link href="/" className="flex items-center gap-1 text-sm font-medium text-amber-500 bg-amber-50 px-3 py-1.5 rounded-xl">
+          ← 뒤로
+        </Link>
         <h2 className="text-lg font-bold text-amber-800">{formatDate(date)}</h2>
       </div>
       <WalkTimer date={date} coupleId={coupleId} />
