@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase-server'
 import DiaryCalendar from '@/components/DiaryCalendar'
 import WeatherCard from '@/components/WeatherCard'
 import KakaoMap from '@/components/KakaoMap'
+import InviteCode from '@/components/InviteCode'
 
 export default async function Home() {
   const supabase = await createClient()
@@ -11,6 +12,12 @@ export default async function Home() {
     .from('profiles')
     .select('couple_id')
     .eq('id', user!.id)
+    .single()
+
+  const { data: couple } = await supabase
+    .from('couples')
+    .select('invite_code')
+    .eq('id', profile!.couple_id)
     .single()
 
   const { data } = await supabase
@@ -25,6 +32,7 @@ export default async function Home() {
       <WeatherCard />
       <DiaryCalendar markedDates={markedDates} coupleId={profile!.couple_id} />
       <KakaoMap />
+      {couple?.invite_code && <InviteCode code={couple.invite_code} />}
     </div>
   )
 }
