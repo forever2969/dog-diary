@@ -1,14 +1,16 @@
 import { ImageResponse } from 'next/og'
-import { readFileSync } from 'fs'
-import { join } from 'path'
 
-export const runtime = 'nodejs'
 export const size = { width: 180, height: 180 }
 export const contentType = 'image/png'
 
-export default function AppleIcon() {
-  const imgData = readFileSync(join(process.cwd(), 'public/pong.jpeg'))
-  const base64 = `data:image/jpeg;base64,${imgData.toString('base64')}`
+export default async function AppleIcon() {
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:5500'
+
+  const res = await fetch(`${baseUrl}/pong.jpeg`)
+  const buffer = await res.arrayBuffer()
+  const base64 = `data:image/jpeg;base64,${Buffer.from(buffer).toString('base64')}`
 
   return new ImageResponse(
     (

@@ -126,15 +126,15 @@ export default function DiaryForm({ date, coupleId, initial }: Props) {
           {meals.map(meal => (
             <div key={meal.label} className="flex flex-col gap-1">
               <span className="text-xs text-gray-400 pl-1">{meal.label}</span>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center border border-gray-200 rounded-xl focus-within:border-amber-400">
                 <input
                   type="number"
                   value={meal.value}
                   onChange={e => meal.onChange(e.target.value)}
                   placeholder="0"
-                  className="flex-1 border border-gray-200 rounded-xl px-3 py-2.5 text-base outline-none focus:border-amber-400"
+                  className="flex-1 px-3 py-2.5 text-base outline-none bg-transparent"
                 />
-                <span className="text-xs text-gray-400">g</span>
+                <span className="pr-2 text-xs text-gray-400">g</span>
               </div>
             </div>
           ))}
