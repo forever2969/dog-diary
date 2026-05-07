@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
+import Toast from '@/components/Toast'
 
 type Poop = {
   id: string
@@ -34,6 +35,7 @@ export default function DiaryForm({ date, coupleId, initial }: Props) {
   const [mealNight, setMealNight] = useState(initial?.meal_night?.toString() ?? '')
   const [memo, setMemo] = useState(initial?.memo ?? '')
   const [poops, setPoops] = useState<Poop[]>([])
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
 
   useEffect(() => {
     supabase
@@ -47,7 +49,7 @@ export default function DiaryForm({ date, coupleId, initial }: Props) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    await supabase.from('diary').upsert({
+    const { error } = await supabase.from('diary').upsert({
       date,
       couple_id: coupleId,
       weight: weight ? parseFloat(weight) : null,
@@ -58,7 +60,11 @@ export default function DiaryForm({ date, coupleId, initial }: Props) {
       meal_night: mealCount === 4 && mealNight ? parseInt(mealNight) : null,
       memo: memo || null,
     })
-    router.back()
+    if (error) {
+      setToast({ message: '저장 실패 😢', type: 'error' })
+    } else {
+      setToast({ message: '저장됐어요 ✓', type: 'success' })
+    }
   }
 
   async function handleAddPoop() {
@@ -87,6 +93,8 @@ export default function DiaryForm({ date, coupleId, initial }: Props) {
   ]
 
   return (
+    <>
+    {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     <form onSubmit={handleSubmit} className="flex flex-col divide-y divide-gray-100">
 
       <div className="flex flex-col gap-2 pb-5">
@@ -192,5 +200,6 @@ export default function DiaryForm({ date, coupleId, initial }: Props) {
         </button>
       </div>
     </form>
+    </>
   )
 }
