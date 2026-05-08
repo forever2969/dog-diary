@@ -64,6 +64,15 @@ export default function DiaryForm({ date, coupleId, initial }: Props) {
       setToast({ message: '저장 실패 😢', type: 'error' })
     } else {
       setToast({ message: '저장됐어요 ✓', type: 'success' })
+      fetch('/api/push/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          coupleId,
+          title: '퐁이 일지 업데이트 🐾',
+          body: `${date} 일지가 저장됐어요`,
+        }),
+      })
     }
   }
 

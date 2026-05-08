@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import './globals.css';
 import LogoutButton from '@/components/LogoutButton';
+import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 import { createClient } from '@/lib/supabase-server';
 
 export const metadata: Metadata = {
@@ -39,6 +40,7 @@ export default async function RootLayout({
                     {user ? <LogoutButton /> : null}
                 </header>
 
+                <ServiceWorkerRegister />
                 <main className="max-w-lg mx-auto px-4 py-6">
                     {children}
                 </main>
