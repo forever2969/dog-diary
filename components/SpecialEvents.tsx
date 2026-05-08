@@ -19,6 +19,7 @@ export default function SpecialEvents({ date, coupleId }: { date: string; couple
   const [selectedType, setSelectedType] = useState('hospital')
   const [memo, setMemo] = useState('')
   const [adding, setAdding] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     supabase
@@ -31,11 +32,16 @@ export default function SpecialEvents({ date, coupleId }: { date: string; couple
   }, [date, coupleId])
 
   async function handleAdd() {
-    const { data } = await supabase
+    setError(null)
+    const { data, error } = await supabase
       .from('special_events')
       .insert({ date, couple_id: coupleId, type: selectedType, memo: memo || null })
       .select('id, type, memo')
       .single()
+    if (error) {
+      setError(error.message)
+      return
+    }
     if (data) {
       setEvents(prev => [...prev, data])
       setMemo('')
@@ -88,6 +94,7 @@ export default function SpecialEvents({ date, coupleId }: { date: string; couple
             placeholder="메모 (선택)"
             className="border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-amber-400 bg-white"
           />
+          {error && <p className="text-xs text-red-500 px-1">{error}</p>}
           <button
             type="button"
             onClick={handleAdd}
