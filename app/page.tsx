@@ -6,6 +6,7 @@ import InviteCode from '@/components/InviteCode'
 import WeightChart from '@/components/WeightChart'
 import PushSubscribe from '@/components/PushSubscribe'
 import TodayCard from '@/components/TodayCard'
+import UpcomingEvents from '@/components/UpcomingEvents'
 
 export default async function Home() {
   const supabase = await createClient()
@@ -42,6 +43,7 @@ export default async function Home() {
       <WeatherCard />
       <DiaryCalendar markedDates={markedDates} specialEvents={specialEvents} coupleId={profile!.couple_id} />
       <KakaoMap />
+      <UpcomingEvents coupleId={profile!.couple_id} />
       <WeightChart coupleId={profile!.couple_id} />
       <PushSubscribe coupleId={profile!.couple_id} />
       {couple?.invite_code && <InviteCode code={couple.invite_code} />}
