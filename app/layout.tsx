@@ -3,6 +3,7 @@ import './globals.css';
 import LogoutButton from '@/components/LogoutButton';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 import { createClient } from '@/lib/supabase-server';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: '퐁이 일지',
@@ -37,7 +38,14 @@ export default async function RootLayout({
             <body className="bg-amber-50 min-h-screen">
                 <header className="bg-white border-b border-amber-100 px-4 py-3 sticky top-0 z-10 flex items-center justify-between">
                     <h1 className="text-lg font-bold text-amber-800">퐁이 일지</h1>
-                    {user ? <LogoutButton /> : null}
+                    {user ? (
+                        <div className="flex items-center gap-2">
+                            <Link href="/profile" className="w-8 h-8 rounded-full overflow-hidden border-2 border-amber-200">
+                                <img src="/pong.jpeg" alt="프로필" className="w-full h-full object-cover" />
+                            </Link>
+                            <LogoutButton />
+                        </div>
+                    ) : null}
                 </header>
 
                 <ServiceWorkerRegister />
