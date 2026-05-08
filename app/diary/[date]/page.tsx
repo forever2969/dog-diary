@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase-server'
 import DiaryForm from '@/components/DiaryForm'
 import WalkTimer from '@/components/WalkTimer'
 import SpecialEvents from '@/components/SpecialEvents'
-import Link from 'next/link'
+import BackButton from '@/components/BackButton'
 
 type Props = {
   params: Promise<{ date: string }>
@@ -38,9 +38,7 @@ export default async function DiaryPage({ params }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-3">
-        <Link href="/" className="flex items-center gap-1 text-sm font-medium text-amber-500 bg-amber-50 px-3 py-1.5 rounded-xl">
-          ← 뒤로
-        </Link>
+        <BackButton />
         <h2 className="text-lg font-bold text-amber-800">{formatDate(date)}</h2>
       </div>
       <WalkTimer date={date} coupleId={coupleId} />

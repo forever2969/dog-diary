@@ -2,8 +2,8 @@ import type {Metadata} from "next";
 import './globals.css';
 import LogoutButton from '@/components/LogoutButton';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
+import ProfileButton from '@/components/ProfileButton';
 import { createClient } from '@/lib/supabase-server';
-import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: '퐁이 일지',
@@ -40,9 +40,7 @@ export default async function RootLayout({
                     <h1 className="text-lg font-bold text-amber-800">퐁이 일지</h1>
                     {user ? (
                         <div className="flex items-center gap-2">
-                            <Link href="/profile" className="w-8 h-8 rounded-full overflow-hidden border-2 border-amber-200">
-                                <img src="/pong.jpeg" alt="프로필" className="w-full h-full object-cover" />
-                            </Link>
+                            <ProfileButton />
                             <LogoutButton />
                         </div>
                     ) : null}

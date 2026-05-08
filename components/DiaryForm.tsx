@@ -36,6 +36,7 @@ export default function DiaryForm({ date, coupleId, initial }: Props) {
   const [memo, setMemo] = useState(initial?.memo ?? '')
   const [poops, setPoops] = useState<Poop[]>([])
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
+  const [saving, setSaving] = useState(false)
 
   useEffect(() => {
     supabase
@@ -49,6 +50,7 @@ export default function DiaryForm({ date, coupleId, initial }: Props) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    setSaving(true)
     const { error } = await supabase.from('diary').upsert({
       date,
       couple_id: coupleId,
@@ -60,6 +62,7 @@ export default function DiaryForm({ date, coupleId, initial }: Props) {
       meal_night: mealCount === 4 && mealNight ? parseInt(mealNight) : null,
       memo: memo || null,
     }, { onConflict: 'couple_id,date' })
+    setSaving(false)
     if (error) {
       setToast({ message: '저장 실패 😢', type: 'error' })
     } else {
@@ -203,9 +206,11 @@ export default function DiaryForm({ date, coupleId, initial }: Props) {
       <div className="pt-5">
         <button
           type="submit"
-          className="w-full bg-amber-400 text-white font-semibold py-3.5 rounded-xl hover:bg-amber-500 transition-colors"
+          disabled={saving}
+          className="w-full bg-amber-400 text-white font-semibold py-3.5 rounded-xl hover:bg-amber-500 active:scale-95 transition-all disabled:opacity-70 flex items-center justify-center gap-2"
         >
-          저장
+          {saving && <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
+          {saving ? '저장 중...' : '저장'}
         </button>
       </div>
     </form>

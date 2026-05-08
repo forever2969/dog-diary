@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase-server'
 import DogProfile from '@/components/DogProfile'
-import Link from 'next/link'
+import BackButton from '@/components/BackButton'
 
 export default async function ProfilePage() {
   const supabase = await createClient()
@@ -23,9 +23,7 @@ export default async function ProfilePage() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-3">
-        <Link href="/" className="flex items-center gap-1 text-sm font-medium text-amber-500 bg-amber-50 px-3 py-1.5 rounded-xl">
-          ← 뒤로
-        </Link>
+        <BackButton />
         <h2 className="text-lg font-bold text-amber-800">퐁이 프로필</h2>
       </div>
       <DogProfile
