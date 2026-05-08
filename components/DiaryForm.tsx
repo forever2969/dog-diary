@@ -102,7 +102,7 @@ export default function DiaryForm({ date, coupleId, initial }: Props) {
         <div className="flex items-center gap-2">
           <input
             type="number"
-            step="0.1"
+            step="0.01"
             value={weight}
             onChange={e => setWeight(e.target.value)}
             placeholder="0.0"
