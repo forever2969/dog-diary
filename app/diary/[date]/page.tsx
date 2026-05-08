@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase-server'
 import DiaryForm from '@/components/DiaryForm'
 import WalkTimer from '@/components/WalkTimer'
+import SpecialEvents from '@/components/SpecialEvents'
 import Link from 'next/link'
 
 type Props = {
@@ -45,6 +46,9 @@ export default async function DiaryPage({ params }: Props) {
       <WalkTimer date={date} coupleId={coupleId} />
       <div className="bg-white rounded-2xl shadow-sm p-5">
         <DiaryForm date={date} coupleId={coupleId} initial={data} />
+      </div>
+      <div className="bg-white rounded-2xl shadow-sm p-5">
+        <SpecialEvents date={date} coupleId={coupleId} />
       </div>
     </div>
   )

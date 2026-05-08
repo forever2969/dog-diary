@@ -23,19 +23,24 @@ export default async function Home() {
     .eq('id', profile!.couple_id)
     .single()
 
-  const { data } = await supabase
-    .from('diary')
-    .select('date')
-    .eq('couple_id', profile!.couple_id)
+  const [{ data }, { data: eventData }] = await Promise.all([
+    supabase.from('diary').select('date').eq('couple_id', profile!.couple_id),
+    supabase.from('special_events').select('date, type').eq('couple_id', profile!.couple_id),
+  ])
 
   const markedDates = (data ?? []).map(row => row.date)
+
+  const specialEvents = (eventData ?? []).reduce<Record<string, string[]>>((acc, row) => {
+    acc[row.date] = [...(acc[row.date] ?? []), row.type]
+    return acc
+  }, {})
 
 
   return (
     <div className="flex flex-col gap-4">
       <TodayCard coupleId={profile!.couple_id} />
       <WeatherCard />
-      <DiaryCalendar markedDates={markedDates} coupleId={profile!.couple_id} />
+      <DiaryCalendar markedDates={markedDates} specialEvents={specialEvents} coupleId={profile!.couple_id} />
       <KakaoMap />
       <WeightChart coupleId={profile!.couple_id} />
       <PushSubscribe coupleId={profile!.couple_id} />
