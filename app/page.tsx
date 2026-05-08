@@ -5,6 +5,7 @@ import KakaoMap from '@/components/KakaoMap'
 import InviteCode from '@/components/InviteCode'
 import WeightChart from '@/components/WeightChart'
 import PushSubscribe from '@/components/PushSubscribe'
+import TodayCard from '@/components/TodayCard'
 
 export default async function Home() {
   const supabase = await createClient()
@@ -32,6 +33,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col gap-4">
+      <TodayCard coupleId={profile!.couple_id} />
       <WeatherCard />
       <DiaryCalendar markedDates={markedDates} coupleId={profile!.couple_id} />
       <KakaoMap />
