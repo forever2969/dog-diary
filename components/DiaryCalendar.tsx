@@ -27,6 +27,21 @@ export default function DiaryCalendar({ markedDates: initialDates, specialEvents
   const [navigating, setNavigating] = useState(false)
 
   useEffect(() => {
+    supabase
+      .from('special_events')
+      .select('date, type')
+      .eq('couple_id', coupleId)
+      .then(({ data }) => {
+        if (!data) return
+        const map = data.reduce<Record<string, string[]>>((acc, row) => {
+          acc[row.date] = [...(acc[row.date] ?? []), row.type]
+          return acc
+        }, {})
+        setSpecialEvents(map)
+      })
+  }, [coupleId])
+
+  useEffect(() => {
     const channel = supabase
       .channel('diary-realtime')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'diary', filter: `couple_id=eq.${coupleId}` },
