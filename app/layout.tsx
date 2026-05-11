@@ -34,6 +34,7 @@ export default async function RootLayout({
         <html lang="ko">
             <head>
                 <link rel="apple-touch-icon" href="/pong.jpeg?v=4" />
+                <style>{`body { background-color: #fffbeb; }`}</style>
             </head>
             <body className="bg-amber-50 min-h-screen">
                 <header className="bg-white border-b border-amber-100 px-4 py-3 sticky top-0 z-10 flex items-center justify-between">
